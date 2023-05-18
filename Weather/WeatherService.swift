@@ -21,14 +21,16 @@ class WeatherService: NSObject, GeocodingServiceDelegate {
     var delegate : WeatherServiceDelegate?
     let geocodingService = GeocodingService()
     
+    override init() {
+        super.init()
+        self.geocodingService.delegate = self;
+    }
     func weatherCityDidChange(_ service: GeocodingService) {
-        guard case self.weatherCity.city = service.weatherCity.city else {return}
+        self.weatherCity.city = service.weatherCity.city
         actuallyGetWeather(lat:weatherCity.city?.lat ?? 0.0, lon:weatherCity.city?.lon ?? 0.0)
     }
     
     func actuallyGetWeather(lat:Double, lon:Double) {
-        print("actually get weather")
-        dump(self.weatherCity)
         guard let url = URL(string:"https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&units=imperial&appid=\(api_key)") else {return}
         let urlRequest = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: urlRequest) { [weak self] data, response, error in
@@ -41,7 +43,7 @@ class WeatherService: NSObject, GeocodingServiceDelegate {
                     }
                 } catch {print(error)}
             } else {
-                
+                print("actually get weather error")
             }
         }
         task.resume()
@@ -55,7 +57,6 @@ class WeatherService: NSObject, GeocodingServiceDelegate {
 
     }
     func getWeather(lat:Double, lon:Double) {
-        dump(self.weatherCity)
         geocodingService.getCity(lat,lon)
     }
     func getWeather (zip:Double) {

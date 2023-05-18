@@ -37,7 +37,11 @@ class CityName : Decodable, Equatable {
     let lat: Double
     let lon: Double
 }
-class WeatherCity {
+class WeatherCity{//: Equatable {
+    //static func == (lhs: WeatherCity, rhs: WeatherCity) -> Bool {
+    //    return lhs.city == rhs.city && lhs.city == rhs.city
+    //}
+    
     var city: CityName?
     var weather: CityWeather?
 }

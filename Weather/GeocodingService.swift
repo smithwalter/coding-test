@@ -21,7 +21,8 @@ class GeocodingService {
         let task = URLSession.shared.dataTask(with: urlRequest) { [weak self] data, response, error in
             if let data = data {
                 do {
-                    self?.weatherCity.city = try JSONDecoder().decode(CityName.self, from:data)
+                    let cityNames = try JSONDecoder().decode([CityName].self, from:data)
+                    self?.weatherCity.city = cityNames[0]
                     DispatchQueue.main.async {self?.delegate?.weatherCityDidChange(self!)}
                 } catch {}
             } else {
@@ -37,7 +38,8 @@ class GeocodingService {
 
             if let data = data {
                 do {
-                    self?.weatherCity.city = try JSONDecoder().decode(CityName.self, from:data)
+                    let cityNames = try JSONDecoder().decode([CityName].self, from:data)
+                    self?.weatherCity.city = cityNames[0]
                     DispatchQueue.main.async {self?.delegate?.weatherCityDidChange(self!)}
                 } catch {}
             } else {
@@ -52,12 +54,12 @@ class GeocodingService {
         let task = URLSession.shared.dataTask(with: urlRequest) { [weak self] data, response, error in
             if let data = data {
                 do {
-                    let city = try JSONDecoder().decode(CityName.self, from:data)
-                    self?.weatherCity.city = city
+                    let cityNames = try JSONDecoder().decode([CityName].self, from:data)
+                    self?.weatherCity.city = cityNames[0]
                     DispatchQueue.main.async {self?.delegate?.weatherCityDidChange(self!)}
-                } catch {}
+                } catch {print(error)}
             } else {
-                
+                print ("name lookup error")
             }
         }
         task.resume()

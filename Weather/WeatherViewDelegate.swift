@@ -14,66 +14,76 @@ class WeatherViewDelegate: ObservableObject, LocationServiceDelegate,WeatherServ
     @Published var cityName:String
     @Published var weatherIcon: UIImage
     @Published var weatherDetails:String
-    var weatherCity : WeatherCity?
+    var weatherCity : WeatherCity = WeatherCity()
     var weatherService: WeatherService = WeatherService()
     var locationService: LocationService?
     var iconService = IconService()
     
     init() {
-        cityName = "User CIty"
+        cityName = "User City"
         weatherIcon = UIImage(systemName: "star")!
         weatherDetails="weather details"
         iconService.delegate = self
         weatherService.delegate = self
-        //updateWeather()
+        updateWeather()
     }
     func iconDidFinishLoad(_ service: IconService) {
-        let userDefaults = UserDefaults()
         self.weatherIcon = service.image ?? UIImage()
-        userDefaults.set(weatherCity, forKey: "weatherCity")
-        print("icon did finish load")
+    }
+    func saveCity() {
+        let userDefaults = UserDefaults()
+        if let lat = self.weatherCity.city?.lat{
+            if let lon = self.weatherCity.city?.lon {
+                userDefaults.set([lat,lon], forKey: "weatherCity")
+            }
+        }
+    }
+    func loadCity() -> Bool{
+        let userDefaults = UserDefaults()
+        if let location = userDefaults.array(forKey: "weatherCity") {
+            let lat:Double = location[0] as! Double
+            let lon:Double = location[1] as! Double
+            weatherService.getWeather(lat:lat, lon:lon)
+            return true
+        }
+        return false
     }
     func weatherDidChange(_ service: WeatherService) {
-        let userDefaults = UserDefaults()
         self.weatherCity = service.weatherCity
-        guard case self.cityName = self.weatherCity?.city?.name else {return}
-        guard case self.weatherDetails = self.weatherCity?.weather?.weather[0].description else {return}
-        if let icon = self.weatherCity?.weather?.weather[0].icon {
+        guard case self.cityName = self.weatherCity.city?.name else {return}
+        guard case self.weatherDetails = self.weatherCity.weather?.weather[0].description else {return}
+        if let icon = self.weatherCity.weather?.weather[0].icon {
             self.iconService.fetch(code:icon)
         }
-        userDefaults.set(weatherCity, forKey: "weatherCity")
-        print("weather did change")
+        saveCity()
+        
     }
     func locationDidChange(_ location: LocationService) {
-        print("location did change")
-        let userDefaults = UserDefaults()
         self.weatherCity = location.weatherCity
-        self.cityName = self.weatherCity?.city?.name ?? "drat"
-        guard case self.weatherDetails = self.weatherCity?.weather?.weather[0].description else {
-            print("failed")
-            return}
-        if let icon = self.weatherCity?.weather?.weather[0].icon {
-            print("fetching icon")
-            self.iconService.fetch(code:icon)
+        self.cityName = self.weatherCity.city?.name ?? "User City"
+        if case let weatherDetails = self.weatherCity.weather?.weather[0].description {
+            self.weatherDetails = weatherDetails ?? ""
         }
-        userDefaults.set(weatherCity, forKey: "weatherCity")
+        else {
+            print("location failed")
+            return}
+        if let icon = self.weatherCity.weather?.weather[0].icon {
+            self.iconService.fetch(code:icon)
+        } else {
+        }
+        saveCity()
     }
     func updateWeather() {
-        let userDefaults = UserDefaults()
-        weatherCity = userDefaults.object(forKey: "weatherCity") as! WeatherCity?
-        if let weatherCity = weatherCity {
-            weatherService.getWeather(lat:weatherCity.weather?.coord.lat ?? 0.0, lon:weatherCity.weather?.coord.lon ?? 0.0)
-        } else {
-            if let locationService = locationService {
+        if loadCity() {
+            return
+        }
+        if let locationService = locationService {
+            
             } else {
                 let locationService = LocationService()
                 locationService.delegate = self
                 locationService.checkLocationPermission()
-            }
         }
-        userDefaults.set(weatherCity, forKey: "weatherCity")
-        
-        guard let weatherDetails = weatherCity?.weather?.weather.description else {return}
     }
     func getWeather(query:String) {
         let cityAndState = /([\w\s]+)\s*,\s*([\w\s]+)/

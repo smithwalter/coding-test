@@ -20,7 +20,7 @@ class LocationService: NSObject, CLLocationManagerDelegate,WeatherServiceDelegat
     var delegate : LocationServiceDelegate?
     
     func weatherDidChange(_ service: WeatherService) {
-        weatherCity.weather = service.weatherCity.weather
+        weatherCity = service.weatherCity
         delegate?.locationDidChange(self)
     }
     override init() {
