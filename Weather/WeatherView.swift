@@ -4,6 +4,7 @@
 //
 //  Created by Walter Smith on 5/16/23.
 //
+// weather widget to insert in UIKit framework.
 
 import SwiftUI
 

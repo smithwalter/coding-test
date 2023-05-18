@@ -36,6 +36,8 @@ class ViewController: UIViewController {
         self.view.addSubview(queryLabel)
         
     }
+    
+    //TODO: write code to link UIKit to SwiftUI
     func go() {
         
     }

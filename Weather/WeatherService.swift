@@ -4,6 +4,7 @@
 //
 //  Created by Walter Smith on 5/16/23.
 //
+// consumes weather APIs
 //https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
 //http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=368940b0edf5e826c673034af78735ec
 //https://api.openweathermap.org/data/2.5/weather?id={city id}&appid={API key}

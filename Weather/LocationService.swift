@@ -4,6 +4,7 @@
 //
 //  Created by Walter Smith on 5/16/23.
 //
+// determines user location with CoreLocation
 
 import Foundation
 import CoreLocation

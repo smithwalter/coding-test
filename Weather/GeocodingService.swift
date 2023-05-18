@@ -3,6 +3,8 @@
 //  Weather
 //
 //  Created by Walter Smith on 5/16/23.
+//
+//consumes geocoding api
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
 import Foundation
