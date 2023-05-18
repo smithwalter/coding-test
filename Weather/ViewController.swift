@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     //var goButton = UIButton(type: UIButton.ButtonType.roundedRect)
     //var queryLabel = UILabel(frame: CGRect(x:50, y:40, width:400, height:40))
     
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         addChild(weatherViewController)

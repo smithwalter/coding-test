@@ -20,12 +20,12 @@ class WeatherViewDelegate: ObservableObject, LocationServiceDelegate,WeatherServ
     var iconService = IconService()
     
     init() {
-        cityName = ""
+        cityName = "User CIty"
         weatherIcon = UIImage(systemName: "star")!
-        weatherDetails=""
+        weatherDetails="weather details"
         iconService.delegate = self
         weatherService.delegate = self
-        updateWeather()
+        //updateWeather()
     }
     func iconDidFinishLoad(_ service: IconService) {
         let userDefaults = UserDefaults()
@@ -79,6 +79,7 @@ class WeatherViewDelegate: ObservableObject, LocationServiceDelegate,WeatherServ
         let cityAndState = /([\w\s]+)\s*,\s*([\w\s]+)/
         let city = /([\w ]*)/
         let cityCoords = /([\d\.]*)\s*,\s*([\d\.]*)/
+        let zipCoords = /\s*(\d*)\s*/
         
         if let match = query.firstMatch(of: cityCoords) {
             weatherService.getWeather(lat:Double(String(match.1)) ?? 0.0, lon:Double(String(match.2)) ?? 0.0)
@@ -88,6 +89,9 @@ class WeatherViewDelegate: ObservableObject, LocationServiceDelegate,WeatherServ
         } else
         if let match = query.firstMatch(of: city) {
             weatherService.getWeather(city:String(match.1))
+        } else
+        if let match = query.firstMatch(of: city) {
+            weatherService.getWeather(zip:Double(String(match.1)) ?? 0.0)
         }
     }
 }

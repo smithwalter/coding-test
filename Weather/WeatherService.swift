@@ -52,10 +52,14 @@ class WeatherService: NSObject, GeocodingServiceDelegate {
     }
     func getWeather (city:String,state:String) {
         geocodingService.getCity(city: city, state:state)
-        
+
     }
     func getWeather(lat:Double, lon:Double) {
         dump(self.weatherCity)
         geocodingService.getCity(lat,lon)
+    }
+    func getWeather (zip:Double) {
+        geocodingService.getCity(zip:zip)
+
     }
 }

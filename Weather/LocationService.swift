@@ -28,7 +28,6 @@ class LocationService: NSObject, CLLocationManagerDelegate,WeatherServiceDelegat
         super.init()
         locationManager.delegate = self;
         weatherService.delegate = self;
-        //checkLocationPermission()
     }
     func checkLocationPermission() {
         switch locationManager.authorizationStatus {

@@ -15,35 +15,8 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QjS-YN-Zg0">
-                                <rect key="frame" x="244" y="541.33333333333337" width="120" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Get Weather"/>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Enter city as &lt;zip&gt;, &lt;city, [state]&gt;, or &lt;lat, lon&gt;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ETI-fK-fw8">
-                                <rect key="frame" x="56" y="497" width="321" height="47"/>
-                                <accessibility key="accessibilityConfiguration" label="Enter city"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wcd-YK-bgI">
-                                <rect key="frame" x="68" y="541.33333333333337" width="168" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="QjS-YN-Zg0" firstAttribute="leading" secondItem="Wcd-YK-bgI" secondAttribute="trailing" constant="8" symbolic="YES" id="4E2-8v-Ipg"/>
-                            <constraint firstItem="Wcd-YK-bgI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="56" id="AUy-kp-TuQ"/>
-                            <constraint firstItem="Wcd-YK-bgI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="68" id="B8f-Iu-XZP"/>
-                            <constraint firstItem="ETI-fK-fw8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="56" id="DB3-gl-tqq"/>
-                            <constraint firstItem="ETI-fK-fw8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="56" id="ahJ-0F-800"/>
-                            <constraint firstItem="QjS-YN-Zg0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="244" id="pIp-SF-HEK"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

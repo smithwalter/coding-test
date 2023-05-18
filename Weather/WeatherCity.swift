@@ -31,7 +31,6 @@ class CityName : Decodable, Equatable {
     static func == (lhs: CityName, rhs: CityName) -> Bool {
         return lhs.lat == rhs.lat && lhs.lon == rhs.lon
     }
-    
     let name: String
     let country: String
     let state: String

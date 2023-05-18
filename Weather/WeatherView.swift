@@ -10,12 +10,18 @@ import SwiftUI
 struct WeatherView: View {
     @ObservedObject var wvd = WeatherViewDelegate()
     var body: some View {
-        VStack{
-            HStack{
-                Text(wvd.cityName)
-                Image(uiImage:wvd.weatherIcon)
+        HStack{
+            Spacer()
+            VStack{
+                HStack{
+                    Text(wvd.cityName)
+                        .font(Font.headline)
+                    Image(uiImage:wvd.weatherIcon)
+                }
+                Text(wvd.weatherDetails)
+                    .font(Font.caption)
             }
-            Text(wvd.weatherDetails)
+            Spacer()
         }
     }
 }

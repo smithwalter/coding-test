@@ -113,6 +113,7 @@
 		5F8660C02A133AE30031EC15 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				5FD4EF772A16762E009E923D /* services */,
 				5F8660C12A133AE30031EC15 /* AppDelegate.swift */,
 				5F8660C32A133AE30031EC15 /* SceneDelegate.swift */,
 				5F8660C52A133AE30031EC15 /* ViewController.swift */,
@@ -122,11 +123,7 @@
 				5F8660CA2A133AE30031EC15 /* Assets.xcassets */,
 				5F8660CC2A133AE30031EC15 /* LaunchScreen.storyboard */,
 				5F8660CF2A133AE30031EC15 /* Info.plist */,
-				5F1F0DD32A142F5100199DBA /* IconService.swift */,
-				5F8660F72A134CB40031EC15 /* LocationService.swift */,
-				5F8660F92A1350990031EC15 /* WeatherService.swift */,
 				5F8660FD2A135FDB0031EC15 /* WeatherCity.swift */,
-				5F8660FB2A13528B0031EC15 /* GeocodingService.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -146,6 +143,17 @@
 				5F8660E42A133AE30031EC15 /* WeatherUITestsLaunchTests.swift */,
 			);
 			path = WeatherUITests;
+			sourceTree = "<group>";
+		};
+		5FD4EF772A16762E009E923D /* services */ = {
+			isa = PBXGroup;
+			children = (
+				5F8660FB2A13528B0031EC15 /* GeocodingService.swift */,
+				5F8660F92A1350990031EC15 /* WeatherService.swift */,
+				5F8660F72A134CB40031EC15 /* LocationService.swift */,
+				5F1F0DD32A142F5100199DBA /* IconService.swift */,
+			);
+			name = services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
