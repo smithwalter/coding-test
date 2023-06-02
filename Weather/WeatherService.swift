@@ -40,9 +40,13 @@ class WeatherService: NSObject, GeocodingServiceDelegate {
                     let cityWeather = try JSONDecoder().decode(CityWeather.self, from:data)
                     self?.weatherCity.weather = cityWeather
                     DispatchQueue.main.async {
-                        self?.delegate?.weatherDidChange(self!)
+                        if let delegate = self?.delegate {
+                            delegate.weatherDidChange(self!)
+                        }
                     }
-                } catch {print(error)}
+                } catch {
+                    print(error)
+                }
             } else {
                 print("actually get weather error")
             }

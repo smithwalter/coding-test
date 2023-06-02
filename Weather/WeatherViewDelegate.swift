@@ -4,14 +4,15 @@
 //
 //  Created by Walter Smith on 5/16/23.
 //
-// This is the VM. I am typing everything together with delegates.
+// This is the VM. I am tying everything together with delegates.
 
 import Foundation
 import UIKit
 
 class WeatherViewDelegate: ObservableObject, LocationServiceDelegate,WeatherServiceDelegate,IconServiceDelegate{
-
+    
     // weather information for shipping to the view
+    @Published var cityTemp:String
     @Published var cityName:String
     @Published var weatherIcon: UIImage
     @Published var weatherDetails:String
@@ -27,6 +28,7 @@ class WeatherViewDelegate: ObservableObject, LocationServiceDelegate,WeatherServ
         cityName = "User City"
         weatherIcon = UIImage(systemName: "star")!
         weatherDetails="weather details"
+        cityTemp="0.0°"
         iconService.delegate = self
         weatherService.delegate = self
         updateWeather()
@@ -61,10 +63,22 @@ class WeatherViewDelegate: ObservableObject, LocationServiceDelegate,WeatherServ
     // delegate from weather model. triggered when weather api is loaded
     func weatherDidChange(_ service: WeatherService) {
         self.weatherCity = service.weatherCity
-        guard case self.cityName = self.weatherCity.city?.name else {return}
-        guard case self.weatherDetails = self.weatherCity.weather?.weather[0].description else {return}
+        if let city = self.weatherCity.city {
+            self.cityName = city.name
+        } else {
+            self.cityName = "User City"
+            print("name failure")
+        }
+        if let weather = self.weatherCity.weather {
+            self.weatherDetails = weather.weather[0].description
+            self.cityTemp = String(weather.main.temp) + "°"
+        } else {
+            print("details failure")
+        }
         if let icon = self.weatherCity.weather?.weather[0].icon {
             self.iconService.fetch(code:icon)
+        } else {
+            print("icon failure")
         }
         saveCity()
         
@@ -72,18 +86,24 @@ class WeatherViewDelegate: ObservableObject, LocationServiceDelegate,WeatherServ
     
     // delegate from location model
     func locationDidChange(_ location: LocationService) {
+        print("location did change")
         self.weatherCity = location.weatherCity
-        self.cityName = self.weatherCity.city?.name ?? "User City"
-        // TODO: figure out how this is always true
-        if case let weatherDetails = self.weatherCity.weather?.weather[0].description {
-            self.weatherDetails = weatherDetails ?? ""
+        if let city = self.weatherCity.city {
+            self.cityName = city.name
+        } else {
+            self.cityName = "User City"
+            print("name failure")
         }
-        else {
-            print("location failed")
-            return}
+        if let weather = self.weatherCity.weather {
+            self.weatherDetails = weather.weather[0].description
+            self.cityTemp = String(weather.main.temp) + "°"
+        } else {
+            print("details failure")
+        }
         if let icon = self.weatherCity.weather?.weather[0].icon {
             self.iconService.fetch(code:icon)
         } else {
+            print("icon failure")
         }
         saveCity()
     }
@@ -92,12 +112,11 @@ class WeatherViewDelegate: ObservableObject, LocationServiceDelegate,WeatherServ
         if loadCity() {
             return
         }
-        if let locationService = locationService {
-            
-            } else {
-                let locationService = LocationService()
-                locationService.delegate = self
-                locationService.checkLocationPermission()
+        guard let locationService = locationService else {
+            let locationService = LocationService()
+            locationService.delegate = self
+            locationService.checkLocationPermission()
+            return
         }
     }
     
@@ -105,22 +124,28 @@ class WeatherViewDelegate: ObservableObject, LocationServiceDelegate,WeatherServ
     func getWeather(query:String) {
         
         //I just love regex, don't you?
-        let cityAndState = /([\w\s]+)\s*,\s*([\w\s]+)/
-        let city = /([\w ]*)/
-        let cityCoords = /([\d\.]*)\s*,\s*([\d\.]*)/
-        let zipCoords = /\s*(\d*)\s*/
+        let cityAndState = /([\w\s]+)\s*,?\s*([\w\s]+)$/
+        let city = /([\w ]*)$/
+        let cityCoords = /([\d\.]+)\s*,?\s*([\d\.]+)$/
+        let zipCoords = /\s*(\d+)\s*$/
         
         if let match = query.firstMatch(of: cityCoords) {
+            print("lat lon")
             weatherService.getWeather(lat:Double(String(match.1)) ?? 0.0, lon:Double(String(match.2)) ?? 0.0)
         } else
+        if let match = query.firstMatch(of: zipCoords) {
+            print("zip")
+            weatherService.getWeather(zip:Double(String(match.1)) ?? 0.0)
+        } else
         if let match = query.firstMatch(of: cityAndState) {
+            print("city, state")
             weatherService.getWeather(city:String(match.1),state:String(match.2))
         } else
         if let match = query.firstMatch(of: city) {
+            print("city")
             weatherService.getWeather(city:String(match.1))
-        } else
-        if let match = query.firstMatch(of: city) {
-            weatherService.getWeather(zip:Double(String(match.1)) ?? 0.0)
         }
+        
+        
     }
 }

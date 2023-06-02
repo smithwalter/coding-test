@@ -18,7 +18,7 @@ class GeocodingService {
     var delegate : GeocodingServiceDelegate?
     
     func getCity(city:String,state:String,limit:Int=10) {
-        guard let url = URL(string:"http://api.openweathermap.org/geo/1.0/direct?q=\(city),\(state)&limit=\(limit)&appid=\(api_key)") else {return}
+        guard let url = URL(string:"https://api.openweathermap.org/geo/1.0/direct?q=\(city),\(state)&limit=\(limit)&appid=\(api_key)") else {return}
         let urlRequest = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: urlRequest) { [weak self] data, response, error in
             if let data = data {
@@ -34,7 +34,7 @@ class GeocodingService {
         task.resume()
     }
     func getCity(city:String,limit:Int=10) {
-        guard let url = URL(string:"http://api.openweathermap.org/geo/1.0/direct?q=\(city)&limit=\(limit)&appid=\(api_key)") else {return}
+        guard let url = URL(string:"https://api.openweathermap.org/geo/1.0/direct?q=\(city)&limit=\(limit)&appid=\(api_key)") else {return}
         let urlRequest = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: urlRequest) { [weak self] data, response, error in
 

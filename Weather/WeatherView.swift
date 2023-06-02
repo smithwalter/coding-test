@@ -19,8 +19,12 @@ struct WeatherView: View {
                         .font(Font.headline)
                     Image(uiImage:wvd.weatherIcon)
                 }
-                Text(wvd.weatherDetails)
-                    .font(Font.caption)
+                
+                HStack {
+                    Text(wvd.cityTemp)
+                    Text(wvd.weatherDetails)
+                        .font(Font.caption)
+                }
             }
             Spacer()
         }
